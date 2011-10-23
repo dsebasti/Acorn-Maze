@@ -28,9 +28,9 @@ public class AcornMazeActivity extends Activity implements MazeListener {
         mLayout.addView(mazeView);
         setContentView(mLayout);
         //TODO: Don't hardcode numbers. (Fix 'zero bug'.)
-        Maze maze = Maze.generateMaze(DifficultyLevel.HARD, 2,
-                                      300,
-                                      400,
+        Maze maze = Maze.generateMaze(DifficultyLevel.HARD, 3,
+                                      5,
+                                      8,
                                       this);
         mazeView.setMaze(maze);
         start = System.currentTimeMillis();

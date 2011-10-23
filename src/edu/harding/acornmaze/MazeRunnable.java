@@ -30,7 +30,7 @@ public class MazeRunnable implements Runnable, SensorEventListener {
     @Override
     public void run() {
         while (!mStop) {
-            mMaze.moveAcorn(mCurrentXAccel, mCurrentYAccel);
+            mMaze.moveAvatar(mCurrentXAccel, mCurrentYAccel);
             mMazeView.postInvalidate();
             try {
                 Thread.sleep(20);
@@ -53,8 +53,8 @@ public class MazeRunnable implements Runnable, SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        mCurrentXAccel = -event.values[0]/(SensorManager.GRAVITY_EARTH*2);
-        mCurrentYAccel = event.values[1]/(SensorManager.GRAVITY_EARTH*2);
+        mCurrentXAccel = -event.values[0]/(SensorManager.GRAVITY_EARTH*5);
+        mCurrentYAccel = event.values[1]/(SensorManager.GRAVITY_EARTH*5);
     }
 
     @Override

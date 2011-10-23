@@ -1,6 +1,7 @@
 package edu.harding.acornmaze;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -36,13 +37,16 @@ public class MazeView extends View implements OnTouchListener {
 
     @Override
     public void onDraw(Canvas canvas) {
-        mMaze.draw(canvas);
+        Bitmap bitmap = Bitmap.createBitmap(canvas.getWidth()/2, canvas.getHeight()/2, Bitmap.Config.ARGB_8888);
+        Canvas mazeCanvas = new Canvas(bitmap);
+        mMaze.draw(mazeCanvas);
+        canvas.drawBitmap(bitmap, canvas.getWidth()/4, canvas.getHeight()/4, new Paint());
         canvas.drawText("Previous time: "+String.valueOf(mPreviousTime)+" secs", 10, 20, new Paint());
     }
 
     @Override
     public boolean onTouch(View itsMe, MotionEvent event) {
-        mMaze.jumpAcorn();
+        mMaze.jumpAvatar();
         return false;
     }
 }
