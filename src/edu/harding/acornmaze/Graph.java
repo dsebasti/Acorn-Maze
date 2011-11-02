@@ -207,6 +207,10 @@ public class Graph {
 		    }
 		    return false;
 		}
+
+        public boolean isFinishNode() {
+            return (mX == mEndX && mY == mEndY && mZ == mDepth-1);
+        }
 	}
 	
 	private class Edge implements Comparable<Edge> {

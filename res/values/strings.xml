@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, AcornMazeActivity!</string>
-    <string name="app_name">AcornMaze</string>
-    <string name="win">You won!</string>
+    <string name="app_name">Acorn Maze</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="name_prompt">High Score! Enter your name.</string>
+    <string name="start">Start Game</string>
+    <string name="options">Options</string>
+    <string name="hiscores">High Scores</string>
+    <string name="reset">Reset</string>
+    <string name="hiscores_default_name">ACRN</string>
+    <string name="hiscores_default_points">1000</string>
+    <string name="hiscores_default_time">10:00.000</string>
+    <string name="hiscores_header_name">Name</string>
+    <string name="hiscores_header_points">Points</string>
+    <string name="hiscores_header_time">Time</string>
 </resources>

@@ -1,8 +1,12 @@
 package edu.harding.acornmaze;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.text.Layout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,16 +14,20 @@ import edu.harding.acornmaze.Maze.DifficultyLevel;
 
 public class AcornMazeActivity extends Activity implements MazeListener {
     
+    //Adding our own result codes.
+    public static final int RESULT_WIN = 0;
+    public static final int RESULT_LOSE = 1;
+    
     private LinearLayout mLayout;
     private SharedPreferences mPrefs;
     private long start;
+    
+    private WakeLock mWakeLock;
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        //MazeView mazeView = (MazeView)findViewById(R.id.maze);
         mLayout = new LinearLayout(this);
         MazeView mazeView = new MazeView(this);
         mPrefs = this.getSharedPreferences("maze_prefs", MODE_PRIVATE);
@@ -35,17 +43,17 @@ public class AcornMazeActivity extends Activity implements MazeListener {
         mazeView.setMaze(maze);
         start = System.currentTimeMillis();
         maze.start(this, mazeView);
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,
+                AcornMazeActivity.class.getPackage().getName());
+        mWakeLock.acquire();
     }
 
     @Override
     public void mazeFinished() {
-        long timeMillis = System.currentTimeMillis() - start;
-        long timeSecs = timeMillis/1000;
-        SharedPreferences.Editor ed = mPrefs.edit();
-        ed.putLong("previousTime", timeSecs);
-        ed.commit();
-        setContentView(R.layout.main);
-        TextView recordView = (TextView)findViewById(R.id.recordView);
-        recordView.setText("Competed in: "+String.valueOf(timeSecs)+" seconds!");
+        mWakeLock.release();
+        Intent result = new Intent().putExtra("score", System.currentTimeMillis()-start);
+        setResult(AcornMazeActivity.RESULT_WIN, result);
+        finish();
     }
 }
